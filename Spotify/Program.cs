@@ -16,10 +16,11 @@ namespace DictionaryDemonstration
             string line = "";
             Dictionary<int, List<string>> map = new Dictionary<int, List<string>>();
             string[] start = new string[4];
-            List<string> starter = new List<string>();
             bool cont = true;
             string newsti = "";
             bool breaker = false;
+            int count = 0;
+            string command = "";
 
 
             using (StreamReader sr = new StreamReader("top10000songs.csv"))
@@ -28,6 +29,7 @@ namespace DictionaryDemonstration
                 {
                     int t = 0;
                     start = line.Split(",");
+                    List<string> starter = new List<string>();
                     for (int i = 1; i <= 3; i++)
                     {
                         string info = start[i];
@@ -40,47 +42,46 @@ namespace DictionaryDemonstration
                     map.Add(int.Parse(start[0]), starter);
                 }
             }
-            Console.WriteLine("search for the name of the song");
             while (cont)
             {
-                breaker = false;
-                string input = Console.ReadLine();
-                input = input.ToUpper();
-                foreach (KeyValuePair<int, List<string>> kvp in map)
+                Console.WriteLine("commands: SEARCH, CLEAR");
+                command = Console.ReadLine();
+                command = command.ToUpper();
+                switch (command)
                 {
-                    if (breaker)
+                    case "CLEAR":
+                        Console.Clear();
                         break;
-                    foreach (string info in kvp.Value)
-                    {
-                        if (breaker)
-                            break;
-                        if (input == info)
+                    case "SEARCH":
+                        count = 0;
+                        Console.WriteLine("search for the name of the song");
+                        breaker = false;
+                        string input = Console.ReadLine();
+                        input = input.ToUpper();
+                        foreach (KeyValuePair<int, List<string>> kvp in map)
                         {
-                            Console.Write(kvp.Key + "\t");
-                            for (int j = 0; j < kvp.Value.Count; j++)
+
+                            List<string> temp = kvp.Value;
+                            if (temp.Contains(input))
                             {
-                                Console.Write(kvp.Value[j] + "\t");
+                                count++;
+                                Console.Write(kvp.Key + "\t");
+                                foreach (string s in kvp.Value)
+                                {
+                                    Console.Write(s + "\t");
+                                }
+                                breaker = true;
+                                Console.WriteLine();
+
                             }
-                            Console.WriteLine();
-                            breaker = true;
-                            break;
                         }
-                    }
+                        Console.WriteLine("there are " + count + " Results");
+                        break;
                 }
 
-
-                //display
-                //foreach (KeyValuePair<int, List<string>> kvp in map)
-                //{
-                //    Console.Write(kvp.Key + "\t");
-                //    foreach (string s in kvp.Value)
-                //    {
-                //        Console.Write(s + "\t");
-                //    }
-                //    Console.WriteLine("");
-                //}
-                //Console.ReadKey();
+                
             }
         }
     }
 }
+
