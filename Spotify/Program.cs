@@ -17,10 +17,9 @@ namespace DictionaryDemonstration
             Dictionary<int, List<string>> map = new Dictionary<int, List<string>>();
             string[] start = new string[4];
             bool cont = true;
-            string newsti = "";
-            bool breaker = false;
             int count = 0;
             string command = "";
+            bool end = false;
 
 
             using (StreamReader sr = new StreamReader("top10000songs.csv"))
@@ -44,7 +43,11 @@ namespace DictionaryDemonstration
             }
             while (cont)
             {
-                Console.WriteLine("commands: SEARCH, CLEAR");
+                if(end) 
+                {
+                    break; 
+                }
+                Console.WriteLine("commands: SEARCH, CLEAR, END");
                 command = Console.ReadLine();
                 command = command.ToUpper();
                 switch (command)
@@ -55,7 +58,6 @@ namespace DictionaryDemonstration
                     case "SEARCH":
                         count = 0;
                         Console.WriteLine("search for the name of the song");
-                        breaker = false;
                         string input = Console.ReadLine();
                         input = input.ToUpper();
                         foreach (KeyValuePair<int, List<string>> kvp in map)
@@ -70,12 +72,15 @@ namespace DictionaryDemonstration
                                 {
                                     Console.Write(s + "\t");
                                 }
-                                breaker = true;
                                 Console.WriteLine();
 
                             }
                         }
                         Console.WriteLine("there are " + count + " Results");
+                        break;
+                    case "END":
+                        Console.WriteLine("ending the program");
+                        end = true;
                         break;
                 }
 
