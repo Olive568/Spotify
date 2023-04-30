@@ -82,6 +82,9 @@ namespace DictionaryDemonstration
                         Console.WriteLine("ending the program");
                         end = true;
                         break;
+                    default:
+                        Console.WriteLine("That is not a command");
+                            break;
                 }
 
                 
