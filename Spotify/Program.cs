@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace DictionaryDemonstration
 {
@@ -20,6 +21,7 @@ namespace DictionaryDemonstration
             int count = 0;
             string command = "";
             bool end = false;
+            Random rnd = new Random();
 
 
             using (StreamReader sr = new StreamReader("top10000songs.csv"))
@@ -47,7 +49,7 @@ namespace DictionaryDemonstration
                 {
                     break; 
                 }
-                Console.WriteLine("commands: SEARCH, CLEAR, END");
+                Console.WriteLine("commands: SEARCH, CLEAR, SHUFFLE, END");
                 command = Console.ReadLine();
                 command = command.ToUpper();
                 switch (command)
@@ -81,6 +83,12 @@ namespace DictionaryDemonstration
                     case "END":
                         Console.WriteLine("ending the program");
                         end = true;
+                        break;
+                    case "SHUFFLE":
+                        for(int x = 0; 0 < 100; x++)
+                        {
+                            for(int y = 0; y < 10; y++)
+                        }
                         break;
                     default:
                         Console.WriteLine("That is not a command");
