@@ -52,7 +52,7 @@ namespace DictionaryDemonstration
                 {
                     break; 
                 }
-                Console.WriteLine("commands: SEARCH, CLEAR, SHUFFLE, END, PLAY, RESET");
+                Console.WriteLine("commands: SEARCH, CLEAR, SHUFFLE, END, PLAY");
                 command = Console.ReadLine();
                 command = command.ToUpper();
                 switch (command)
@@ -69,38 +69,45 @@ namespace DictionaryDemonstration
                         switch (sechs)
                         {
                             case "SONG":
-                                Console.WriteLine("Write the name of the song");
+                                Console.WriteLine("Write the Name of the song");
                                 sech = Console.ReadLine();
-                                foreach (KeyValuePair<int, List<string>> kvp in map)
+                                using (StreamWriter sr = new StreamWriter("search.txt"))
                                 {
-                                    if (kvp.Value[1].ToUpper() == sech)
+                                    foreach (KeyValuePair<int, List<string>> kvp in map)
                                     {
-                                        Console.Write(kvp.Key + "\t");
-                                        foreach (string s in kvp.Value)
+                                        if (kvp.Value[1].ToUpper() == sech)
                                         {
-                                            Console.Write(s + "\t");
+                                            sr.Write(kvp.Key + "\t");
+                                            foreach (string s in kvp.Value)
+                                            {
+                                                sr.Write(s + "\t");
+                                            }
+                                            sr.WriteLine();
                                         }
-                                        Console.WriteLine();
-                                        count++;
                                     }
                                 }
+                                Console.WriteLine("search results is now in search.txt");
+
                                 break;
                             case "ARTIST":
                                 Console.WriteLine("Write the artist of the song");
                                 sech = Console.ReadLine();
-                                foreach (KeyValuePair<int, List<string>> kvp in map)
+                                using (StreamWriter sr = new StreamWriter("search.txt"))
                                 {
-                                    if (kvp.Value[0].ToUpper() == sech)
+                                    foreach (KeyValuePair<int, List<string>> kvp in map)
                                     {
-                                        Console.Write(kvp.Key + "\t");
-                                        foreach (string s in kvp.Value)
+                                        if (kvp.Value[0].ToUpper() == sech)
                                         {
-                                            Console.Write(s + "\t");
+                                            sr.Write(kvp.Key + "\t");
+                                            foreach (string s in kvp.Value)
+                                            {
+                                                sr.Write(s + "\t");
+                                            }
+                                            sr.WriteLine();
                                         }
-                                        Console.WriteLine();
-                                        count++;
                                     }
                                 }
+                                Console.WriteLine("search results is now in search.txt");                                   
                                 break;
                         }
                                 Console.WriteLine("there are " + count + " Results");
@@ -110,6 +117,9 @@ namespace DictionaryDemonstration
                         end = true;
                         break;
                     case "SHUFFLE":
+                        artist.Clear();
+                        ID.Clear();
+                        shuffle.Clear();
                         int y = 0;
                         Console.WriteLine("how many songs do you want in the shuffle playlist?");
                         int Shufnum = int.Parse(Console.ReadLine());
@@ -147,7 +157,19 @@ namespace DictionaryDemonstration
                                 x--;
                             }
                         }
-                        Console.WriteLine("Shuffled playlist created, type PLAY to show");
+                        using(StreamWriter sr = new StreamWriter("shuffle.txt"))
+                        {
+                            foreach(KeyValuePair<int,List<string>> kvp in shuffle)
+                            {
+                                sr.Write(kvp.Key + "\t");
+                                foreach(string s in kvp.Value)
+                                {
+                                    sr.Write(s + "\t");    
+                                }
+                                sr.WriteLine();
+                            }
+                        }
+                        Console.WriteLine("Shuffled playlist created and has been added in shuffle.txt, type PLAY to show");
                         break;
 
                     case "PLAY":
@@ -160,12 +182,6 @@ namespace DictionaryDemonstration
                             }
                             Console.WriteLine();
                         }
-                        break;
-                    case "RESET":
-                        artist.Clear();
-                        ID.Clear();
-                        shuffle.Clear();
-                        Console.WriteLine("shuffle playlist has been cleared");
                         break;
                     default:
                         Console.WriteLine("That is not a command");
