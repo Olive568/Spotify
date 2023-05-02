@@ -17,11 +17,14 @@ namespace DictionaryDemonstration
             string line = "";
             Dictionary<int, List<string>> map = new Dictionary<int, List<string>>();
             string[] start = new string[4];
+            List<int> ID = new List<int>();
+            List<string> artist = new List<string>(); 
             bool cont = true;
             int count = 0;
             string command = "";
             bool end = false;
             Random rnd = new Random();
+            Dictionary<int, List<string>> shuffle = new Dictionary<int, List<string>>();
 
 
             using (StreamReader sr = new StreamReader("top10000songs.csv"))
@@ -49,7 +52,7 @@ namespace DictionaryDemonstration
                 {
                     break; 
                 }
-                Console.WriteLine("commands: SEARCH, CLEAR, SHUFFLE, END");
+                Console.WriteLine("commands: SEARCH, CLEAR, SHUFFLE, END, PLAY");
                 command = Console.ReadLine();
                 command = command.ToUpper();
                 switch (command)
@@ -85,10 +88,58 @@ namespace DictionaryDemonstration
                         end = true;
                         break;
                     case "SHUFFLE":
-                        for(int x = 0; 0 < 100; x++)
+                        int y = 0;
+                        for(int x =0; x < map.Count; x++)
                         {
-                            for(int y = 0; y < 10; y++)
+                            int index = rnd.Next(map.Count);
+                            KeyValuePair<int, List<string>> kvp = map.ElementAt(index);
+                            int ID1 = kvp.Key;
+                            string artists = kvp.Value[0];
+                            if (!ID.Contains(ID1))
+                            {
+                                if(y == 10)
+                                {
+                                    y = 0;
+                                    artist.Clear();
+                                    shuffle.Add(kvp.Key, kvp.Value);
+                                    ID.Add(ID1);
+
+                                }
+                                else if(!artist.Contains(artists))
+                                {
+                                    y++;
+                                    artist.Add(artists);
+                                    ID.Add(ID1);
+                                    shuffle.Add(kvp.Key, kvp.Value);
+                                }
+                                else
+                                {
+                                    y--;
+                                    x--;
+                                }
+                            }
+                            else
+                            {
+                                x--;
+                            }
                         }
+                        Console.WriteLine("Shuffled playlist created, type PLAY to show");
+                        break;
+
+                    case "PLAY":
+                        foreach (KeyValuePair < int,List<string>> kvp in shuffle)
+                        {
+                            Console.Write(kvp.Key + "\t");
+                            foreach(string s in kvp.Value)
+                            {
+                                Console.Write(s + "\t");
+                            }
+                            Console.WriteLine();
+                        }
+                        break;
+                    case "RESET":
+                        shuffle.Clear();
+                        Console.WriteLine("shuffle playlist has been cleared");
                         break;
                     default:
                         Console.WriteLine("That is not a command");
