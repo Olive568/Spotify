@@ -65,11 +65,12 @@ namespace DictionaryDemonstration
                         Console.WriteLine("Type SONG to search for search name and ARTIST for artist name");
                         string sechs = Console.ReadLine();
                         sechs = sechs.ToUpper();
+                        string sech = "";
                         switch (sechs)
                         {
                             case "SONG":
                                 Console.WriteLine("Write the name of the song");
-                                string sech = Console.ReadLine();
+                                sech = Console.ReadLine();
                                 foreach (KeyValuePair<int, List<string>> kvp in map)
                                 {
                                     if (kvp.Value[1].ToUpper() == sech)
@@ -86,7 +87,7 @@ namespace DictionaryDemonstration
                                 break;
                             case "ARTIST":
                                 Console.WriteLine("Write the artist of the song");
-                                string sech = Console.ReadLine();
+                                sech = Console.ReadLine();
                                 foreach (KeyValuePair<int, List<string>> kvp in map)
                                 {
                                     if (kvp.Value[0].ToUpper() == sech)
