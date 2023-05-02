@@ -71,24 +71,22 @@ namespace DictionaryDemonstration
                             case "SONG":
                                 Console.WriteLine("Write the Name of the song");
                                 sech = Console.ReadLine();
-                                using (StreamWriter sr = new StreamWriter("search.txt"))
+                                foreach (KeyValuePair<int, List<string>> kvp in map)
                                 {
-                                    foreach (KeyValuePair<int, List<string>> kvp in map)
+                                    if (kvp.Value[1].ToUpper() == sech)
                                     {
-                                        if (kvp.Value[1].ToUpper() == sech)
+                                        count++;
+                                        Console.Write(kvp.Key + "\t");
+                                        foreach (string s in kvp.Value)
                                         {
-                                            sr.Write(kvp.Key + "\t");
-                                            foreach (string s in kvp.Value)
-                                            {
-                                                sr.Write(s + "\t");
-                                            }
-                                            sr.WriteLine();
+                                            Console.Write(s + "\t");
                                         }
+                                        Console.WriteLine();
                                     }
                                 }
-                                Console.WriteLine("search results is now in search.txt");
-
+                                Console.WriteLine("there are " + count + " results");
                                 break;
+
                             case "ARTIST":
                                 Console.WriteLine("Write the artist of the song");
                                 sech = Console.ReadLine();
@@ -98,6 +96,7 @@ namespace DictionaryDemonstration
                                     {
                                         if (kvp.Value[0].ToUpper() == sech)
                                         {
+                                            count++;
                                             sr.Write(kvp.Key + "\t");
                                             foreach (string s in kvp.Value)
                                             {
@@ -106,6 +105,7 @@ namespace DictionaryDemonstration
                                             sr.WriteLine();
                                         }
                                     }
+                                    sr.WriteLine("there are " + count + " Results");
                                 }
                                 Console.WriteLine("search results is now in search.txt");                                   
                                 break;
