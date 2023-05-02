@@ -52,7 +52,7 @@ namespace DictionaryDemonstration
                 {
                     break; 
                 }
-                Console.WriteLine("commands: SEARCH, CLEAR, SHUFFLE, END, PLAY");
+                Console.WriteLine("commands: SEARCH, CLEAR, SHUFFLE, END, PLAY, RESET");
                 command = Console.ReadLine();
                 command = command.ToUpper();
                 switch (command)
@@ -89,7 +89,9 @@ namespace DictionaryDemonstration
                         break;
                     case "SHUFFLE":
                         int y = 0;
-                        for(int x =0; x < map.Count; x++)
+                        Console.WriteLine("how many songs do you want in the shuffle playlist?");
+                        int Shufnum = int.Parse(Console.ReadLine());
+                        for(int x =0; x < Shufnum; x++)
                         {
                             int index = rnd.Next(map.Count);
                             KeyValuePair<int, List<string>> kvp = map.ElementAt(index);
