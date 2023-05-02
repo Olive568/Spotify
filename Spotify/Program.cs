@@ -62,26 +62,47 @@ namespace DictionaryDemonstration
                         break;
                     case "SEARCH":
                         count = 0;
-                        Console.WriteLine("search for the name of the song");
-                        string input = Console.ReadLine();
-                        input = input.ToUpper();
-                        foreach (KeyValuePair<int, List<string>> kvp in map)
+                        Console.WriteLine("Type SONG to search for search name and ARTIST for artist name");
+                        string sechs = Console.ReadLine();
+                        sechs = sechs.ToUpper();
+                        switch (sechs)
                         {
-
-                            List<string> temp = kvp.Value;
-                            if (temp.Contains(input))
-                            {
-                                count++;
-                                Console.Write(kvp.Key + "\t");
-                                foreach (string s in kvp.Value)
+                            case "SONG":
+                                Console.WriteLine("Write the name of the song");
+                                string sech = Console.ReadLine();
+                                foreach (KeyValuePair<int, List<string>> kvp in map)
                                 {
-                                    Console.Write(s + "\t");
+                                    if (kvp.Value[1].ToUpper() == sech)
+                                    {
+                                        Console.Write(kvp.Key + "\t");
+                                        foreach (string s in kvp.Value)
+                                        {
+                                            Console.Write(s + "\t");
+                                        }
+                                        Console.WriteLine();
+                                        count++;
+                                    }
                                 }
-                                Console.WriteLine();
-
-                            }
+                                break;
+                            case "ARTIST":
+                                Console.WriteLine("Write the artist of the song");
+                                string sech = Console.ReadLine();
+                                foreach (KeyValuePair<int, List<string>> kvp in map)
+                                {
+                                    if (kvp.Value[0].ToUpper() == sech)
+                                    {
+                                        Console.Write(kvp.Key + "\t");
+                                        foreach (string s in kvp.Value)
+                                        {
+                                            Console.Write(s + "\t");
+                                        }
+                                        Console.WriteLine();
+                                        count++;
+                                    }
+                                }
+                                break;
                         }
-                        Console.WriteLine("there are " + count + " Results");
+                                Console.WriteLine("there are " + count + " Results");
                         break;
                     case "END":
                         Console.WriteLine("ending the program");
@@ -140,12 +161,15 @@ namespace DictionaryDemonstration
                         }
                         break;
                     case "RESET":
+                        artist.Clear();
+                        ID.Clear();
                         shuffle.Clear();
                         Console.WriteLine("shuffle playlist has been cleared");
                         break;
                     default:
                         Console.WriteLine("That is not a command");
                             break;
+
                 }
 
                 
